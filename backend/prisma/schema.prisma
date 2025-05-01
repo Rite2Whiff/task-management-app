@@ -8,9 +8,9 @@ datasource db {
 }
 
 model User{
-  id              String           @id        @default(uuid())
-  username        String          
-  email           String
+  id              String      @id        @default(uuid())
+  username        String      @unique    
+  email           String      @unique
   password        String
   tasks           Task[]      @relation("UserTasks")
   assingedTasks   Task[]      @relation("AssignedTasks")
