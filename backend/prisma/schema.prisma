@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User{
+  id              String           @id        @default(uuid())
+  username        String          
+  email           String
+  password        String
+  tasks           Task[]      @relation("UserTasks")
+  assingedTasks   Task[]      @relation("AssignedTasks")
+}
+
+model Task{
+  id              String          @id       @default(uuid())
+  title           String
+  description     String
+  userId          String
+  user            User            @relation("UserTasks",fields: [userId],references: [id])
+  assignedToId    String
+  assignedTo      User            @relation("AssignedTasks",fields: [assignedToId],references: [id])
+  status          TaskStatus      @default(PENDING)
+  priority        TaskPriority    @default(LOW)
+  dueDate         DateTime
+  createdAt       DateTime        @default(now())
+  completeAt      DateTime
+}
+
+
+enum TaskStatus{
+  PENDING
+  INPROGRESS
+  COMPLETED
+}
+
+enum TaskPriority{
+  LOW
+  MEDIUM
+  CRITICAL
+}
