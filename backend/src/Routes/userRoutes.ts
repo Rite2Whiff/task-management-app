@@ -10,7 +10,7 @@ const router = Router();
 router.post("/api/user/signup", async (req, res) => {
   const { username, email, password } = req.body;
 
-  if (username || email || password) {
+  if (!username || !email || !password) {
     res.status(400).json({
       message: "Please provide the necessary details ",
     });
@@ -24,7 +24,7 @@ router.post("/api/user/signup", async (req, res) => {
       },
     });
 
-    if (!existingUser) {
+    if (existingUser) {
       res.status(400).json({
         message:
           "The username or email is already in use. Please provie a unique username and email",
@@ -54,7 +54,7 @@ router.post("/api/user/signup", async (req, res) => {
 
 router.post("/api/user/singin", async (req, res) => {
   const { username, password } = req.body;
-  if (username || password) {
+  if (!username || !password) {
     res.status(400).json({
       message: "Please provide the necessary details ",
     });
@@ -100,6 +100,6 @@ router.post("/api/user/singin", async (req, res) => {
 
 router.get("/api/user/:id", (req, res) => {});
 
-router.get("api/user/:id/tasks", (req, res) => {});
+router.get("/api/user/:id/tasks", (req, res) => {});
 
 export default router;

@@ -25,10 +25,10 @@ model Task{
   assignedToId    String
   assignedTo      User            @relation("AssignedTasks",fields: [assignedToId],references: [id])
   status          TaskStatus      @default(PENDING)
-  priority        TaskPriority    @default(LOW)
+  priority        TaskPriority    
   dueDate         DateTime
   createdAt       DateTime        @default(now())
-  completeAt      DateTime
+  completeAt      DateTime? 
 }
 
 

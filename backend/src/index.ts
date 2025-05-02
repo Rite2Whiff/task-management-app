@@ -3,6 +3,7 @@ import userRoutes from "./Routes/userRoutes";
 import taskRoutes from "./Routes/taskRoute";
 
 const app = express();
+app.use(express.json());
 
 app.use(userRoutes);
 app.use(taskRoutes);
