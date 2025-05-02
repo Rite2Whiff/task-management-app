@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { prismaClient } from "../prismaClient";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import { AuthMiddleware } from "../authMiddleware";
 dotenv.config();
 
 const router = Router();
@@ -98,8 +99,68 @@ router.post("/api/user/singin", async (req, res) => {
   }
 });
 
-router.get("/api/user/:id", (req, res) => {});
+router.get("/api/user", AuthMiddleware, async (req, res) => {
+  const userId = req.userId;
 
-router.get("/api/user/:id/tasks", (req, res) => {});
+  if (!userId) {
+    res.status(401).json({
+      message: "You are not authorized",
+    });
+    return;
+  }
+
+  try {
+    const user = await prismaClient.user.findFirst({
+      where: {
+        id: userId,
+      },
+    });
+    if (!user) {
+      res.status(404).json({
+        message: "No user found",
+      });
+      return;
+    }
+    res.status(200).json({
+      user,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error finding the user. Please try again after few minutes",
+    });
+    console.log("Error", error);
+  }
+});
+
+router.get("/api/user/tasks", async (req, res) => {
+  const userId = req.userId;
+
+  if (!userId) {
+    res.status(401).json({
+      message: "You are not authorized",
+    });
+    return;
+  }
+
+  try {
+    const tasks = await prismaClient.task.findMany({
+      where: { userId },
+    });
+    if (!tasks) {
+      res.status(404).json({
+        message: "No tasks found",
+      });
+      return;
+    }
+    res.status(200).json({
+      tasks,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error finding the tasks. Please try again after few minutes",
+    });
+    console.log("Error", error);
+  }
+});
 
 export default router;
