@@ -53,7 +53,7 @@ router.post("/api/user/signup", async (req, res) => {
   }
 });
 
-router.post("/api/user/singin", async (req, res) => {
+router.post("/api/user/signin", async (req, res) => {
   const { username, password } = req.body;
   if (!username || !password) {
     res.status(400).json({
