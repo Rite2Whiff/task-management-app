@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 import { FormEvent, RefObject } from "react";
 
 export interface AuthFormValues {
@@ -7,4 +8,12 @@ export interface AuthFormValues {
   emailRef?: RefObject<HTMLInputElement | null>;
   passwordRef: RefObject<HTMLInputElement | null>;
   onSubmit: (e: FormEvent) => void;
+}
+
+export interface TaskSummaryValues {
+  title: string;
+  info: string;
+  tasksNumber: number;
+  icon: LucideIcon;
+  classname?: string;
 }
