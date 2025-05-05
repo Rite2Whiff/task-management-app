@@ -1,3 +1,4 @@
+"use client";
 import {
   Funnel,
   CirclePlus,
@@ -8,11 +9,25 @@ import {
   CircleAlert,
 } from "lucide-react";
 import TaskSummary from "./TaskSummary";
+import Link from "next/link";
+import { useAuth } from "@/context/AuthContext";
 
 export default function TasksDashboard() {
+  const { user } = useAuth();
+
   return (
     <div className="w-5/6 ">
-      <header className="border-b-1 border-white/10 p-5">User Details</header>
+      <header className="border-b-1 border-white/10 px-5 py-5 flex justify-between items-center">
+        <h2 className="text-lg">Hi {user?.username}</h2>
+        <div>
+          <button
+            type="button"
+            className="pointer bg-white px-6 py-2 text-black rounded-lg"
+          >
+            <Link href={"/auth/login"}>Logout</Link>
+          </button>
+        </div>
+      </header>
       <div className="p-4 flex flex-col gap-y-5">
         <div className="flex justify-between">
           <div>

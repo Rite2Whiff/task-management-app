@@ -83,13 +83,28 @@ router.post("/api/user/signin", async (req, res) => {
       });
       return;
     }
-    const token = jwt.sign(
+    const accessToken = jwt.sign(
       { id: foundUser.id },
-      process.env.JWT_SECRET as string
+      process.env.ACCESS_TOKEN_SECRET as string,
+      { expiresIn: "30m" }
     );
+
+    const refreshToken = jwt.sign(
+      { id: foundUser.id },
+      process.env.REFRESH_TOKEN_SECRET as string,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      path: "/api/user/refresh-token",
+    });
+
     res.status(200).json({
       message: "You have successfully signed in",
-      token,
+      accessToken,
+      user: foundUser,
     });
   } catch (error) {
     res.status(500).json({
@@ -97,6 +112,34 @@ router.post("/api/user/signin", async (req, res) => {
     });
     console.log("Error", error);
   }
+});
+
+router.post("/api/user/refresh-token", (req, res) => {
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    res.status(401).json({ message: "No refresh token" });
+    return;
+  }
+
+  jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET as string,
+    (err: any, user: any) => {
+      if (err) {
+        res.status(403).json({ message: "Invalid or expired refresh token" });
+        return;
+      }
+      const newAccessToken = jwt.sign(
+        { id: user.id },
+        process.env.ACCESS_TOKEN_SECRET as string,
+        { expiresIn: "15m" }
+      );
+      res.json({
+        accessToken: newAccessToken,
+      });
+    }
+  );
 });
 
 router.get("/api/user", AuthMiddleware, async (req, res) => {
@@ -132,7 +175,7 @@ router.get("/api/user", AuthMiddleware, async (req, res) => {
   }
 });
 
-router.get("/api/user/tasks", async (req, res) => {
+router.get("/api/user/tasks", AuthMiddleware, async (req, res) => {
   const userId = req.userId;
 
   if (!userId) {

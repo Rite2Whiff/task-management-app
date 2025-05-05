@@ -3,7 +3,9 @@ import { LayoutDashboard, Settings, ClipboardList } from "lucide-react";
 export default function Sidebar() {
   return (
     <div className="w-1/6  border-r-1 border-white/10">
-      <h2 className="border-b-1 border-white/10 py-5 px-3">Task Flow</h2>
+      <h2 className="border-b-1 text-lg border-white/10 py-[26px] px-3">
+        Task Flow
+      </h2>
       <ul className="mt-5 px-3 flex flex-col gap-5">
         <li className="flex gap-2">
           <span>

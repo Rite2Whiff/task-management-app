@@ -17,3 +17,17 @@ export interface TaskSummaryValues {
   icon: LucideIcon;
   classname?: string;
 }
+
+export interface User {
+  username: string;
+  email: string;
+  password: string;
+  id: string;
+}
+
+export interface AuthContextType {
+  accessToken: string | null;
+  user: User | null;
+  login: (token: string, user: User) => void;
+  logout: () => void;
+}

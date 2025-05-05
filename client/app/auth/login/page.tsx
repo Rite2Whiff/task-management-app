@@ -1,17 +1,18 @@
 "use client";
 import { AuthForm } from "@/Components/AuthForm";
 import Loader from "@/Components/Loader";
+import { useAuth } from "@/context/AuthContext";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 export default function Login() {
   const [loading, setLoading] = useState(false);
   const usernameRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
+  const { login } = useAuth();
 
   async function handleLogin(e: FormEvent) {
     const username = usernameRef.current?.value;
@@ -26,29 +27,21 @@ export default function Login() {
           password,
         }
       );
-      console.log(response);
+      const { accessToken, user } = response.data;
+      login(accessToken, user);
+      console.log(user.username);
       toast.success(response.data.message, {
         onClose: () => {
           setLoading(true);
-          timeoutRef.current = setTimeout(() => {
-            router.push("/dashboard");
-          }, 3000);
         },
       });
+      router.push("/dashboard");
     } catch (error: any) {
       console.log(error);
       const message = error?.response?.data.message;
       toast.error(message);
     }
   }
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   if (loading) {
     return <Loader loading={loading} />;
