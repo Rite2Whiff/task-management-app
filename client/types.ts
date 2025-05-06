@@ -31,3 +31,20 @@ export interface AuthContextType {
   login: (token: string, user: User) => void;
   logout: () => void;
 }
+
+export interface Tasks {
+  id: string;
+  title: string;
+  description: string;
+  userId: string;
+  assignedToId?: string;
+  status: string;
+  priority: string;
+  dueDate: Date;
+}
+
+export interface TaskContextType {
+  tasks: Tasks[] | null;
+  fetchTasks: () => Promise<void>;
+  deleteTask: (taskId: string) => void;
+}

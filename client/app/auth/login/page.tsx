@@ -31,11 +31,16 @@ export default function Login() {
       login(accessToken, user);
       console.log(user.username);
       toast.success(response.data.message, {
-        onClose: () => {
+        onClose: async () => {
           setLoading(true);
+          await new Promise((resolve) =>
+            setTimeout(() => {
+              resolve("promise has been resolved");
+            }, 3000)
+          );
+          router.push("/dashboard");
         },
       });
-      router.push("/dashboard");
     } catch (error: any) {
       console.log(error);
       const message = error?.response?.data.message;

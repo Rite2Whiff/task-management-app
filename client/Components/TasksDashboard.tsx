@@ -11,6 +11,7 @@ import {
 import TaskSummary from "./TaskSummary";
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
+import Tasks from "./Tasks";
 
 export default function TasksDashboard() {
   const { user } = useAuth();
@@ -87,6 +88,9 @@ export default function TasksDashboard() {
             classname="text-[#7f1d1d]"
             info="12 tasks added this week"
           />
+        </div>
+        <div>
+          <Tasks />
         </div>
       </div>
     </div>

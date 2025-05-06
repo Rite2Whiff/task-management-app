@@ -90,7 +90,7 @@ router.put("/api/task/:id", async (req, res) => {
 
 router.delete("/api/task/:id", async (req, res) => {
   const userId = req.userId;
-  const { taskId } = req.body;
+  const id = req.params.id;
 
   if (!userId) {
     res.status(401).json({
@@ -100,15 +100,26 @@ router.delete("/api/task/:id", async (req, res) => {
   }
 
   try {
-    await prismaClient.task.delete({
+    const findTask = await prismaClient.task.findFirst({
       where: {
-        id: taskId,
-        userId,
+        id: id,
       },
     });
-    res.status(200).json({
-      message: "Task has been successfully deleted",
-    });
+
+    if (userId === findTask?.userId) {
+      await prismaClient.task.delete({
+        where: {
+          id: id,
+        },
+      });
+      res.status(200).json({
+        message: "Task has been successfully deleted",
+      });
+    } else {
+      res.status(403).json({
+        message: "You do not have the permission to delete this task",
+      });
+    }
   } catch (error) {
     res.status(500).json({
       message: "Error deleting task. Please try again after few minutes",
