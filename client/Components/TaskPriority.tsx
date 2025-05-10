@@ -7,15 +7,13 @@ export default function TaskPriority({ priority }: { priority: string }) {
     );
   } else if (priority === "MEDIUM") {
     return (
-      <div className="text-[#cc5fd9] bg-purple-100 rounded-xl">
-        {" "}
+      <div className="text-[#af57db] py-1 px-6 text-md bg-[#c366e0]/10 rounded-2xl flex items-center">
         {priority.charAt(0).toUpperCase() + priority.slice(1).toLowerCase()}
       </div>
     );
   } else
     return (
-      <div className="text-[#7f1d1d] bg-red-100 rounded-xl">
-        {" "}
+      <div className="text-[#7f1d1d] py-1 px-6 text-md bg-[#ff00001a] rounded-2xl flex items-center">
         {priority.charAt(0).toUpperCase() + priority.slice(1).toLowerCase()}
       </div>
     );

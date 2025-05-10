@@ -30,6 +30,8 @@ export interface AuthContextType {
   user: User | null;
   login: (token: string, user: User) => void;
   logout: () => void;
+  getAllUsers: () => void;
+  allUsers: User[] | null;
 }
 
 export interface Tasks {
@@ -47,4 +49,12 @@ export interface TaskContextType {
   tasks: Tasks[] | null;
   fetchTasks: () => Promise<void>;
   deleteTask: (taskId: string) => void;
+  updateTask: (taskId: string, taskStatus: string) => void;
+}
+
+export type ViewOption = "myTasks" | "assignedTasks" | "overdueTasks";
+
+export interface SidebarProps {
+  onSelect: (view: ViewOption) => void;
+  view: ViewOption;
 }

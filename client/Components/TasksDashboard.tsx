@@ -1,20 +1,23 @@
 "use client";
-import {
-  Funnel,
-  CirclePlus,
-  Search,
-  ChartColumnIncreasing,
-  Clock,
-  CircleCheck,
-  CircleAlert,
-} from "lucide-react";
-import TaskSummary from "./TaskSummary";
-import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
-import Tasks from "./Tasks";
 
-export default function TasksDashboard() {
-  const { user } = useAuth();
+import { useAuth } from "@/context/AuthContext";
+import { ViewOption } from "@/types";
+import MyTasks from "./MyTasks";
+import AssignedTasks from "./AssignedTasks";
+import { OverdueTasks } from "./OverdueTasks";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function TasksDashboard({ view }: { view: ViewOption }) {
+  const { user, logout, getAllUsers } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchData() {
+      await getAllUsers();
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="w-5/6 ">
@@ -22,76 +25,33 @@ export default function TasksDashboard() {
         <h2 className="text-lg">Hi {user?.username}</h2>
         <div>
           <button
+            onClick={() => {
+              logout();
+              router.push("/auth/login");
+            }}
             type="button"
-            className="pointer bg-white px-6 py-2 text-black rounded-lg"
+            className="cursor-pointer bg-white px-6 py-2 text-black rounded-lg"
           >
-            <Link href={"/auth/login"}>Logout</Link>
+            Logout
           </button>
         </div>
       </header>
       <div className="p-4 flex flex-col gap-y-5">
-        <div className="flex justify-between">
+        {(view === "myTasks" && (
           <div>
-            <h2 className="text-2xl font-semibold">Your Tasks</h2>
-            <p className="text-lg text-[#a3a3a3]">
-              Manage your tasks and boost your productivity
-            </p>
+            <MyTasks />
           </div>
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <span className="absolute top-3 left-2">
-                <Search size={16} color="#a3a3a3" />
-              </span>
-              <input
-                type="text"
-                id="tasks"
-                placeholder="Search tasks..."
-                className="border border-white/10 px-8 py-2 rounded-lg"
-              />
+        )) ||
+          (view === "assignedTasks" && (
+            <div>
+              <AssignedTasks />
             </div>
-            <button className="border border-white/10 p-2 rounded-lg cursor-pointer">
-              <Funnel color="#fff" />
-            </button>
-            <button className="bg-white px-4 py-2 rounded-lg text-black flex gap-2 cursor-pointer">
-              <span>
-                <CirclePlus />
-              </span>
-              Add Task
-            </button>
-          </div>
-        </div>
-        <div className="flex gap-4">
-          <TaskSummary
-            icon={ChartColumnIncreasing}
-            title="Total Tasks"
-            tasksNumber={24}
-            info="12 tasks added this week"
-          />
-          <TaskSummary
-            icon={Clock}
-            title="In Progress"
-            tasksNumber={24}
-            classname="text-[#cc5fd9]"
-            info="12 tasks added this week"
-          />
-          <TaskSummary
-            icon={CircleCheck}
-            title="Completed"
-            tasksNumber={24}
-            classname="text-[#2eb88a]"
-            info="12 tasks added this week"
-          />
-          <TaskSummary
-            icon={CircleAlert}
-            title="Overdue"
-            tasksNumber={24}
-            classname="text-[#7f1d1d]"
-            info="12 tasks added this week"
-          />
-        </div>
-        <div>
-          <Tasks />
-        </div>
+          )) ||
+          (view === "overdueTasks" && (
+            <div>
+              <OverdueTasks />
+            </div>
+          ))}
       </div>
     </div>
   );

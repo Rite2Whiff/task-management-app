@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthMiddleware } from "../authMiddleware";
 import { prismaClient } from "../prismaClient";
 import { UpdateTaskInputs } from "../interface";
+import { connectedUsers, getIO, io } from "../socket";
 
 const router = Router();
 
@@ -30,6 +31,12 @@ router.post("/api/task", async (req, res) => {
         status: "PENDING",
       },
     });
+
+    const socketId = connectedUsers[assignedToId];
+    if (socketId) {
+      io.to(socketId).emit("new-task", task);
+      console.log(`Notified user ${assignedToId} of new task`);
+    }
 
     res.status(200).json({
       message: "This task has been created",
@@ -77,6 +84,13 @@ router.put("/api/task/:id", async (req, res) => {
         userId,
       },
     });
+
+    const io = getIO();
+    io.emit("task-updated", {
+      userId: task.assignedToId,
+      task,
+    });
+
     res.status(200).json({
       message: `Task with id ${updatedTask.id} has been updated`,
     });

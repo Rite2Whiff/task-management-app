@@ -1,1 +1,1 @@
-{"root":["./src/authmiddleware.ts","./src/index.ts","./src/interface.ts","./src/prismaclient.ts","./src/routes/taskroute.ts","./src/routes/userroutes.ts","./src/types/express.d.ts"],"version":"5.8.3"}
+{"root":["./src/authmiddleware.ts","./src/index.ts","./src/interface.ts","./src/prismaclient.ts","./src/socket.ts","./src/routes/taskroute.ts","./src/routes/userroutes.ts","./src/types/express.d.ts"],"version":"5.8.3"}

@@ -175,6 +175,35 @@ router.get("/api/user", AuthMiddleware, async (req, res) => {
   }
 });
 
+router.get("/api/users", AuthMiddleware, async (req, res) => {
+  const userId = req.userId;
+
+  if (!userId) {
+    res.status(401).json({
+      message: "You are not authorized",
+    });
+    return;
+  }
+
+  try {
+    const users = await prismaClient.user.findMany({});
+    if (!users) {
+      res.status(404).json({
+        message: "No user found",
+      });
+      return;
+    }
+    res.status(200).json({
+      users,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error finding the user. Please try again after few minutes",
+    });
+    console.log("Error", error);
+  }
+});
+
 router.get("/api/user/tasks", AuthMiddleware, async (req, res) => {
   const userId = req.userId;
 
@@ -187,7 +216,9 @@ router.get("/api/user/tasks", AuthMiddleware, async (req, res) => {
 
   try {
     const tasks = await prismaClient.task.findMany({
-      where: { userId },
+      where: {
+        assignedToId: userId,
+      },
     });
     if (!tasks) {
       res.status(404).json({
