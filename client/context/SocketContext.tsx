@@ -15,7 +15,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     const userJson = localStorage.getItem("user");
     const User = userJson ? JSON.parse(userJson) : [];
     const userId = User.id;
-    const socketIo = io("https://task-management-app-udrp.vercel.app/", {
+    const socketIo = io("https://task-management-app-udrp.vercel.app", {
       auth: { token },
     });
 

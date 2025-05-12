@@ -11,7 +11,11 @@ export const connectedUsers: { [userId: string]: string } = {};
 
 export function initSocket(server: any) {
   io = new Server(server, {
-    cors: { origin: "https://task-management-app-psi-two.vercel.app/" },
+    cors: {
+      origin: "https://task-management-app-psi-two.vercel.app",
+      methods: ["GET", "POST"],
+      credentials: true,
+    },
   });
 
   io.use((socket: AuthenticatedSocket, next: (err?: ExtendedError) => void) => {
