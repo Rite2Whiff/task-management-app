@@ -11,4 +11,4 @@ cmds = ["npm install"]
 cmds = ["npm run build"]
 
 [phases.start]
-cmds = ["npm start"]
+cmds = ["npm run start"]
