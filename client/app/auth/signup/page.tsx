@@ -36,10 +36,14 @@ export default function Signup() {
           router.push("/auth/login");
         },
       });
-    } catch (error: any) {
-      console.log(error);
-      const message = error?.response?.data.message;
-      toast.error(message);
+    } catch (error: unknown) {
+      if (error && typeof error === "object" && "response" in error) {
+        const err = error as { response: { data: { message: string } } };
+        const message = err.response.data.message;
+        toast.error(message);
+      } else {
+        toast.error("An unexpected error occurred.");
+      }
     }
   }
 

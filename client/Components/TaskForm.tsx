@@ -51,7 +51,7 @@ export default function TaskForm({
   }, [open]);
 
   const handleInputChange =
-    (setter: React.Dispatch<React.SetStateAction<any>>) =>
+    (setter: (value: string) => void) =>
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
       setter(e.target.value);
     };

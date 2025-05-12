@@ -1,10 +1,6 @@
-import { useSocket } from "@/context/SocketContext";
-import { useTask } from "@/context/TaskContext";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-export default function RadioButton({ taskId }: { taskId: string }) {
-  const { updateTask, fetchTasks } = useTask();
-  const socket = useSocket();
+export default function RadioButton() {
   const [selected, setSelected] = useState(false);
 
   return (

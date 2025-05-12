@@ -53,7 +53,7 @@ export default function Tasks({ search }: { search: string }) {
               <div className="flex flex-col">
                 <div className="flex justify-between items-center">
                   <div className="flex gap-2">
-                    <RadioButton taskId={id} />
+                    <RadioButton />
                     <h4 className="text-xl">{title}</h4>
                   </div>
                   <TaskPriority priority={priority} />
