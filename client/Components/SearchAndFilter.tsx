@@ -2,7 +2,13 @@ import { Funnel, CirclePlus, Search } from "lucide-react";
 import { useRef, useState } from "react";
 import TaskForm from "./TaskForm";
 
-export default function SearchAndFilter() {
+export default function SearchAndFilter({
+  setSearch,
+  search,
+}: {
+  setSearch: (value: string) => void;
+  search: string;
+}) {
   const [open, setOpen] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const descriptionRef = useRef<HTMLInputElement | null>(null);
@@ -22,6 +28,8 @@ export default function SearchAndFilter() {
             id="tasks"
             placeholder="Search tasks..."
             className="border border-white/10 px-8 py-2 rounded-lg"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <button className="border border-white/10 p-2 rounded-lg cursor-pointer">

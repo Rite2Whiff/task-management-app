@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/context/AuthContext";
 import { User } from "@/types";
 import {
   Dialog,
@@ -27,12 +28,8 @@ export default function TaskForm({
   priorityRef: RefObject<HTMLSelectElement | null>;
   assignToRef: RefObject<HTMLSelectElement | null>;
 }) {
-  const userJson = localStorage.getItem("user");
-  const User = userJson ? JSON.parse(userJson) : [];
-  const UsersJson = localStorage.getItem("allUsers");
-  const Users = UsersJson ? JSON.parse(UsersJson) : [];
-
-  const filetUsers = Users.filter((user: User) => user.id !== User.id);
+  const { allUsers, user } = useAuth();
+  const filetUsers = allUsers?.filter((u: User) => u.id !== user?.id);
 
   async function handleSubmit() {
     const title = titleRef.current?.value;
@@ -43,25 +40,21 @@ export default function TaskForm({
     const priority = priorityRef.current?.value;
     const token = localStorage.getItem("accessToken");
     const assignTo = assignToRef.current?.value;
-    const assignToUser = filetUsers.find(
+    const assignToUser = filetUsers?.find(
       (user: User) => user.username === assignTo
     );
-    console.log(title, description, date, priority, assignToUser.id, token);
+    console.log(title, description, date, priority, assignToUser?.id, token);
     const response = await axios.post(
       "http://localhost:3000/api/task",
       {
         title,
         description,
-        assignedToId: assignToUser.id,
+        assignedToId: assignToUser?.id,
         dueDate: date,
         priority,
       },
       { headers: { Authorization: token } }
     );
-
-    console.log(User);
-
-    console.log("task created");
     console.log(response);
   }
 
@@ -165,7 +158,7 @@ export default function TaskForm({
                           className="border bg-black
                           border-white/20 rounded-md py-1 px-2"
                         >
-                          {filetUsers.map((user: User) => {
+                          {filetUsers?.map((user: User) => {
                             return (
                               <option key={user.id} value={user.username}>
                                 {user.username}

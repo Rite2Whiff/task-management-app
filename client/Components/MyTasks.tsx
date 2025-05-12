@@ -1,7 +1,9 @@
 import Tasks from "./Tasks";
 import SearchAndFilter from "./SearchAndFilter";
+import { useState } from "react";
 
 export default function MyTasks() {
+  const [search, setSearch] = useState("");
   return (
     <>
       <div className="flex justify-between">
@@ -11,10 +13,10 @@ export default function MyTasks() {
             Manage your tasks and boost your productivity
           </p>
         </div>
-        <SearchAndFilter />
+        <SearchAndFilter setSearch={setSearch} search={search} />
       </div>
       <div>
-        <Tasks />
+        <Tasks search={search} />
       </div>
     </>
   );

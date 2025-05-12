@@ -177,4 +177,37 @@ router.get("/api/task/:id", async (req, res) => {
   }
 });
 
+router.get("/api/tasks/assignedTasks", async (req, res) => {
+  const userId = req.userId;
+
+  if (!userId) {
+    res.status(401).json({
+      message: "You are not authorized",
+    });
+    return;
+  }
+
+  try {
+    const tasks = await prismaClient.task.findMany({
+      where: {
+        userId: userId,
+      },
+    });
+    if (!tasks) {
+      res.status(404).json({
+        message: "No task found",
+      });
+      return;
+    }
+    res.status(200).json({
+      tasks,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error finding the tasks. Please try again after few minutes",
+    });
+    console.log("Error", error);
+  }
+});
+
 export default router;

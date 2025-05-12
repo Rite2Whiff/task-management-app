@@ -6,18 +6,22 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const TaskContext = createContext<TaskContextType>({
   tasks: null,
-  fetchTasks: async (): Promise<void> => {},
-  deleteTask: async (): Promise<void> => {},
-  updateTask: async (): Promise<void> => {},
+  assignedTasks: null,
+  fetchTasks: () => {},
+  deleteTask: () => {},
+  updateTask: () => {},
+  getAssignedTasks: () => {},
 });
 
 export function TaskProvider({ children }: { children: React.ReactNode }) {
   const [tasks, setTasks] = useState<Tasks[]>([]);
+  const [assignedTasks, setAssignedTasks] = useState<Tasks[]>([]);
 
   useEffect(() => {
-    fetchTasks();
     const storedTasks = localStorage.getItem("tasks");
     if (storedTasks) setTasks(JSON.parse(storedTasks));
+    const storedAssignedTasks = localStorage.getItem("assignedTasks");
+    if (storedAssignedTasks) setAssignedTasks(JSON.parse(storedAssignedTasks));
   }, []);
 
   async function fetchTasks() {
@@ -82,8 +86,27 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  async function getAssignedTasks() {
+    const token = localStorage.getItem("accessToken");
+    const response = await axios.get(
+      "http://localhost:3000/api/tasks/assignedTasks",
+      { headers: { Authorization: token } }
+    );
+    console.log(response.data.tasks);
+    localStorage.setItem("assignedTasks", JSON.stringify(response.data.tasks));
+  }
+
   return (
-    <TaskContext.Provider value={{ tasks, fetchTasks, deleteTask, updateTask }}>
+    <TaskContext.Provider
+      value={{
+        tasks,
+        fetchTasks,
+        deleteTask,
+        updateTask,
+        getAssignedTasks,
+        assignedTasks,
+      }}
+    >
       {children}
     </TaskContext.Provider>
   );

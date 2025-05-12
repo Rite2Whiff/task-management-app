@@ -31,6 +31,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(user);
     localStorage.setItem("accessToken", token);
     localStorage.setItem("user", JSON.stringify(user));
+    getAllUsers();
   }
 
   async function getAllUsers() {

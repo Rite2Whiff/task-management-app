@@ -47,9 +47,11 @@ export interface Tasks {
 
 export interface TaskContextType {
   tasks: Tasks[] | null;
-  fetchTasks: () => Promise<void>;
+  assignedTasks: Tasks[] | null;
+  fetchTasks: () => void;
   deleteTask: (taskId: string) => void;
   updateTask: (taskId: string, taskStatus: string) => void;
+  getAssignedTasks: () => void;
 }
 
 export type ViewOption = "myTasks" | "assignedTasks" | "overdueTasks";
@@ -57,4 +59,9 @@ export type ViewOption = "myTasks" | "assignedTasks" | "overdueTasks";
 export interface SidebarProps {
   onSelect: (view: ViewOption) => void;
   view: ViewOption;
+}
+
+export interface Notification {
+  title: string;
+  assignedBy: string;
 }

@@ -6,24 +6,18 @@ import MyTasks from "./MyTasks";
 import AssignedTasks from "./AssignedTasks";
 import { OverdueTasks } from "./OverdueTasks";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import Notification from "./Notification";
 
 export default function TasksDashboard({ view }: { view: ViewOption }) {
-  const { user, logout, getAllUsers } = useAuth();
+  const { user, logout } = useAuth();
   const router = useRouter();
-
-  useEffect(() => {
-    async function fetchData() {
-      await getAllUsers();
-    }
-    fetchData();
-  }, []);
 
   return (
     <div className="w-5/6 ">
       <header className="border-b-1 border-white/10 px-5 py-5 flex justify-between items-center">
         <h2 className="text-lg">Hi {user?.username}</h2>
-        <div>
+        <div className="flex items-center gap-10">
+          <Notification />
           <button
             onClick={() => {
               logout();
