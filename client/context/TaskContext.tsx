@@ -28,9 +28,12 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("accessToken");
     console.log(token);
     try {
-      const response = await axios.get("http://localhost:3000/api/user/tasks", {
-        headers: { Authorization: token },
-      });
+      const response = await axios.get(
+        "https://task-management-app-udrp.vercel.app/api/user/tasks",
+        {
+          headers: { Authorization: token },
+        }
+      );
       setTasks(response.data.tasks);
       localStorage.setItem("tasks", JSON.stringify(response.data.tasks));
     } catch (error) {
@@ -42,7 +45,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axios.delete(
-        `http://localhost:3000/api/user/${taskId}`,
+        `https://task-management-app-udrp.vercel.app/api/user/${taskId}`,
         { headers: { Authorization: token } }
       );
 
@@ -63,7 +66,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/task/${taskId}`,
+        `https://task-management-app-udrp.vercel.app/api/task/${taskId}`,
         { status: taskStatus },
         { headers: { Authorization: token } }
       );
@@ -90,7 +93,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   async function getAssignedTasks() {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      "http://localhost:3000/api/tasks/assignedTasks",
+      "https://task-management-app-udrp.vercel.app/api/tasks/assignedTasks",
       { headers: { Authorization: token } }
     );
     console.log(response.data.tasks);

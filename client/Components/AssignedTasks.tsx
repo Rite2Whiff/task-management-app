@@ -33,9 +33,12 @@ export default function AssignedTasks() {
     const token = localStorage.getItem("accessToken");
 
     try {
-      await axios.delete(`http://localhost:3000/api/task/${taskId}`, {
-        headers: { Authorization: token },
-      });
+      await axios.delete(
+        `https://task-management-app-udrp.vercel.app/api/task/${taskId}`,
+        {
+          headers: { Authorization: token },
+        }
+      );
 
       const updatedTasks = tasksToRender.filter((task) => task.id !== taskId);
       setAssignedTasks(updatedTasks);

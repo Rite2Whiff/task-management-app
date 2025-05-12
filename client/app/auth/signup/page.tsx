@@ -21,7 +21,7 @@ export default function Signup() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/user/signup",
+        "https://task-management-app-udrp.vercel.app/api/user/signup",
         {
           username,
           email,

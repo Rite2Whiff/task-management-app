@@ -70,14 +70,14 @@ export default function TaskForm({
     try {
       if (taskToEdit) {
         const response = await axios.put(
-          `http://localhost:3000/api/task/${taskToEdit.id}`,
+          `https://task-management-app-udrp.vercel.app/api/task/${taskToEdit.id}`,
           taskPayload,
           { headers: { Authorization: token } }
         );
         onTaskUpdated?.(response.data);
       } else {
         const response = await axios.post(
-          "http://localhost:3000/api/task",
+          "https://task-management-app-udrp.vercel.app/api/task",
           taskPayload,
           { headers: { Authorization: token } }
         );
