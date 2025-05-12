@@ -1,10 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "main": "index",
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc && prisma migrate deploy",
     "dev": "tsc -b && node dist/index.js",
-    "start": "node dist/index.js"
+    "start": "prisma generate && prisma migrate deploy && node dist/index.js"
   },
   "keywords": [],
   "author": "",
