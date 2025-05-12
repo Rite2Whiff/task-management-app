@@ -2,7 +2,7 @@
 workDir = "backend"
 
 [phases.setup]
-nixPkgs = ["nodejs"]
+nixPkgs = ["nodejs","typescript"]
 
 [phases.install]
 cmds = ["npm install"]
