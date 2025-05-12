@@ -1,5 +1,5 @@
-import { Funnel, CirclePlus, Search } from "lucide-react";
-import { useRef, useState } from "react";
+import { CirclePlus, Search } from "lucide-react";
+import { useState } from "react";
 import TaskForm from "./TaskForm";
 
 export default function SearchAndFilter({
@@ -10,11 +10,6 @@ export default function SearchAndFilter({
   search: string;
 }) {
   const [open, setOpen] = useState(false);
-  const titleRef = useRef<HTMLInputElement | null>(null);
-  const descriptionRef = useRef<HTMLInputElement | null>(null);
-  const dateRef = useRef<HTMLInputElement | null>(null);
-  const priorityRef = useRef<HTMLSelectElement | null>(null);
-  const assignToRef = useRef<HTMLSelectElement | null>(null);
 
   return (
     <div className="mb-8">
@@ -32,9 +27,6 @@ export default function SearchAndFilter({
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <button className="border border-white/10 p-2 rounded-lg cursor-pointer">
-          <Funnel color="#fff" />
-        </button>
         <button
           className="bg-white px-4 py-2 rounded-lg text-black flex gap-2 cursor-pointer"
           onClick={() => setOpen(true)}
@@ -45,15 +37,7 @@ export default function SearchAndFilter({
           Add Task
         </button>
       </div>
-      <TaskForm
-        open={open}
-        setOpen={setOpen}
-        titleRef={titleRef}
-        descriptionRef={descriptionRef}
-        dateRef={dateRef}
-        priorityRef={priorityRef}
-        assignToRef={assignToRef}
-      />
+      <TaskForm open={open} setOpen={setOpen} />
     </div>
   );
 }

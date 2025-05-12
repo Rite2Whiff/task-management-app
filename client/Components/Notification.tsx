@@ -1,4 +1,5 @@
 import { useSocket } from "@/context/SocketContext";
+import { useTask } from "@/context/TaskContext";
 import type { Notification, Tasks, User } from "@/types";
 import { Bell } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -8,6 +9,7 @@ export default function Notification() {
   const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [count, setCount] = useState(0);
+  const { fetchTasks } = useTask();
 
   useEffect(() => {
     const stored = localStorage.getItem("notifications");
@@ -40,6 +42,7 @@ export default function Notification() {
     };
 
     socket?.on("new-task", handleNewTask);
+    fetchTasks();
 
     return () => {
       socket?.off("new-task", handleNewTask);
@@ -48,14 +51,23 @@ export default function Notification() {
 
   return (
     <div className="relative">
-      <button className="cursor-pointer" onClick={() => setIsOpen(!isOpen)}>
+      <button
+        className="cursor-pointer"
+        onClick={() => {
+          setIsOpen(!isOpen);
+          if (!isOpen) {
+            setCount(0);
+            return;
+          }
+        }}
+      >
         <Bell />
       </button>
 
       <div
         className={`${
           isOpen
-            ? "absolute min-w-[400px] min-h-[100px] max-h-[300px] border-bottom border-white/10 top-4 right-4 z-2 bg-black text-white  rounded-md overflow-y-auto "
+            ? "absolute min-w-[400px] min-h-[100px] max-h-[300px] border border-white/10 top-4 right-4 z-2 bg-black text-white  rounded-md overflow-y-auto "
             : " hidden"
         }`}
       >
@@ -79,6 +91,7 @@ export default function Notification() {
           }`}
           onClick={() => {
             setNotifications([]);
+            setCount(0);
           }}
         >
           clear all

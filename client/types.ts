@@ -45,14 +45,15 @@ export interface Tasks {
   dueDate: Date;
 }
 
-export interface TaskContextType {
-  tasks: Tasks[] | null;
-  assignedTasks: Tasks[] | null;
+export type TaskContextType = {
+  tasks: Tasks[];
+  assignedTasks: Tasks[];
   fetchTasks: () => void;
   deleteTask: (taskId: string) => void;
   updateTask: (taskId: string, taskStatus: string) => void;
   getAssignedTasks: () => void;
-}
+  setAssignedTasks: (tasks: Tasks[]) => void;
+};
 
 export type ViewOption = "myTasks" | "assignedTasks" | "overdueTasks";
 

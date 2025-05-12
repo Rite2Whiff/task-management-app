@@ -1,16 +1,16 @@
 "use client";
-
 import { TaskContextType, Tasks } from "@/types";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
 const TaskContext = createContext<TaskContextType>({
-  tasks: null,
-  assignedTasks: null,
+  tasks: [],
+  assignedTasks: [],
   fetchTasks: () => {},
   deleteTask: () => {},
   updateTask: () => {},
   getAssignedTasks: () => {},
+  setAssignedTasks: () => {},
 });
 
 export function TaskProvider({ children }: { children: React.ReactNode }) {
@@ -74,9 +74,10 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
 
       if (findTask) {
         const updatedTask: Tasks = { ...findTask, status: taskStatus };
-        const updatedTaskArray = setTasks((prevState) =>
-          prevState.map((task) => (task.id === taskId ? updatedTask : task))
+        const updatedTaskArray = getTasks.map((task) =>
+          task.id === taskId ? updatedTask : task
         );
+        setTasks(updatedTaskArray); // Updated state setter
         localStorage.setItem("tasks", JSON.stringify(updatedTaskArray));
         return;
       }
@@ -93,6 +94,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
       { headers: { Authorization: token } }
     );
     console.log(response.data.tasks);
+    setAssignedTasks(response.data.tasks);
     localStorage.setItem("assignedTasks", JSON.stringify(response.data.tasks));
   }
 
@@ -105,6 +107,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         updateTask,
         getAssignedTasks,
         assignedTasks,
+        setAssignedTasks,
       }}
     >
       {children}
