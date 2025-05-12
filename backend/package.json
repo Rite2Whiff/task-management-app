@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index",
   "scripts": {
-    "build": "npx tsc && npx prisma generate",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && npx tsc && npx prisma generate",
     "dev": "npx tsc -b && node dist/index.js",
     "start": "npx prisma migrate deploy && node dist/index.js"
   },
