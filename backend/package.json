@@ -1,12 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index",
+  "main": "dist/index.js",
   "scripts": {
-    "clean": "rm -rf dist",
-    "build": "npm run clean && npx tsc && npx prisma generate",
+    "build": "npx tsc && npx prisma generate",
     "dev": "npx tsc -b && node dist/index.js",
-    "start": "npx prisma migrate deploy && node dist/index.js"
+    "start": "npx prisma migrate deploy && echo 'Migrations completed' &&  node dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -28,5 +27,8 @@
     "prisma": "^6.7.0",
     "socket.io": "^4.8.1",
     "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }
