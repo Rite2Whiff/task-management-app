@@ -15,9 +15,12 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     const userJson = localStorage.getItem("user");
     const User = userJson ? JSON.parse(userJson) : [];
     const userId = User.id;
-    const socketIo = io("https://task-management-app-udrp.vercel.app", {
-      auth: { token },
-    });
+    const socketIo = io(
+      "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000",
+      {
+        auth: { token },
+      }
+    );
 
     socketIo.on("connect", () => {
       if (userId) {

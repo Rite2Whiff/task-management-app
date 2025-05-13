@@ -29,7 +29,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     console.log(token);
     try {
       const response = await axios.get(
-        "https://task-management-app-udrp.vercel.app/api/user/tasks",
+        "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/user/tasks",
         {
           headers: { Authorization: token },
         }
@@ -45,7 +45,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axios.delete(
-        `https://task-management-app-udrp.vercel.app/api/user/${taskId}`,
+        `http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/user/${taskId}`,
         { headers: { Authorization: token } }
       );
 
@@ -66,7 +66,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axios.put(
-        `https://task-management-app-udrp.vercel.app/api/task/${taskId}`,
+        `http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/task/${taskId}`,
         { status: taskStatus },
         { headers: { Authorization: token } }
       );
@@ -80,7 +80,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
         const updatedTaskArray = getTasks.map((task) =>
           task.id === taskId ? updatedTask : task
         );
-        setTasks(updatedTaskArray); // Updated state setter
+        setTasks(updatedTaskArray);
         localStorage.setItem("tasks", JSON.stringify(updatedTaskArray));
         return;
       }
@@ -93,7 +93,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   async function getAssignedTasks() {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      "https://task-management-app-udrp.vercel.app/api/tasks/assignedTasks",
+      "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/tasks/assignedTasks",
       { headers: { Authorization: token } }
     );
     console.log(response.data.tasks);

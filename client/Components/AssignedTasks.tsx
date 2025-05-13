@@ -34,7 +34,7 @@ export default function AssignedTasks() {
 
     try {
       await axios.delete(
-        `https://task-management-app-udrp.vercel.app/api/task/${taskId}`,
+        `http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/task/${taskId}`,
         {
           headers: { Authorization: token },
         }

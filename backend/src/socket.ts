@@ -12,9 +12,8 @@ export const connectedUsers: { [userId: string]: string } = {};
 export function initSocket(server: any) {
   io = new Server(server, {
     cors: {
-      origin: "https://task-management-app-psi-two.vercel.app",
+      origin: "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000",
       methods: ["GET", "POST"],
-      credentials: true,
     },
   });
 

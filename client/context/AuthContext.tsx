@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function getAllUsers() {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      "https://task-management-app-udrp.vercel.app/api/users",
+      "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/users",
       {
         headers: { Authorization: token },
       }

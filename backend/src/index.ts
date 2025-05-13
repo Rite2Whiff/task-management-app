@@ -13,10 +13,8 @@ app.use(express.json());
 app.use(cors());
 app.use(
   cors({
-    origin: "https://task-management-app-psi-two.vercel.app",
+    origin: "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
   })
 );
 app.use(cookieParser());
