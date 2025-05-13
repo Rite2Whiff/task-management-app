@@ -12,7 +12,7 @@ export const connectedUsers: { [userId: string]: string } = {};
 export function initSocket(server: any) {
   io = new Server(server, {
     cors: {
-      origin: "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000",
+      origin: "https://task-management-app-production-0bf2.up.railway.app",
       methods: ["GET", "POST"],
     },
   });

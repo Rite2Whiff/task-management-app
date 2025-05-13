@@ -16,7 +16,7 @@ export function SocketProvider({ children }: { children: React.ReactNode }) {
     const User = userJson ? JSON.parse(userJson) : [];
     const userId = User.id;
     const socketIo = io(
-      "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000",
+      "https://task-management-app-production-0bf2.up.railway.app",
       {
         auth: { token },
       }

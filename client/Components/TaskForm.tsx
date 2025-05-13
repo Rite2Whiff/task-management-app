@@ -70,14 +70,14 @@ export default function TaskForm({
     try {
       if (taskToEdit) {
         const response = await axios.put(
-          `http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/task/${taskToEdit.id}`,
+          `https://task-management-app-production-0bf2.up.railway.app/api/task/${taskToEdit.id}`,
           taskPayload,
           { headers: { Authorization: token } }
         );
         onTaskUpdated?.(response.data);
       } else {
         const response = await axios.post(
-          "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/task",
+          "https://task-management-app-production-0bf2.up.railway.app/api/task",
           taskPayload,
           { headers: { Authorization: token } }
         );

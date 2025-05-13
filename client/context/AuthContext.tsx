@@ -37,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   async function getAllUsers() {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/users",
+      "https://task-management-app-production-0bf2.up.railway.app/api/users",
       {
         headers: { Authorization: token },
       }

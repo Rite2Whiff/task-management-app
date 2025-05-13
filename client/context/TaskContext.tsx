@@ -66,7 +66,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
     const token = localStorage.getItem("accessToken");
     try {
       const response = await axios.put(
-        `http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/task/${taskId}`,
+        `https://task-management-app-production-0bf2.up.railway.app/api/task/${taskId}`,
         { status: taskStatus },
         { headers: { Authorization: token } }
       );
@@ -93,7 +93,7 @@ export function TaskProvider({ children }: { children: React.ReactNode }) {
   async function getAssignedTasks() {
     const token = localStorage.getItem("accessToken");
     const response = await axios.get(
-      "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/tasks/assignedTasks",
+      "https://task-management-app-production-0bf2.up.railway.app/api/tasks/assignedTasks",
       { headers: { Authorization: token } }
     );
     console.log(response.data.tasks);

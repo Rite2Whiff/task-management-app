@@ -34,7 +34,7 @@ export default function AssignedTasks() {
 
     try {
       await axios.delete(
-        `http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/task/${taskId}`,
+        `https://task-management-app-production-0bf2.up.railway.app/api/task/${taskId}`,
         {
           headers: { Authorization: token },
         }

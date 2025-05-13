@@ -21,7 +21,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://ec2-3-111-39-63.ap-south-1.compute.amazonaws.com:3000/api/signin",
+        "https://task-management-app-production-0bf2.up.railway.app/api/signin",
         {
           username,
           password,
