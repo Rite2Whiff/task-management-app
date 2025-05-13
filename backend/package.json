@@ -5,7 +5,7 @@
   "scripts": {
     "build": "npx tsc && npx prisma generate",
     "dev": "npx tsc -b && node dist/index.js",
-    "start": "npx prisma migrate deploy && echo 'Migrations completed' && node dist/index.js"
+    "start": "npx tsc && npx prisma migrate deploy && node dist/index.js"
   },
   "keywords": [],
   "author": "",
