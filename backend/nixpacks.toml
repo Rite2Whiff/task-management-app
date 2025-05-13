@@ -1,11 +1,12 @@
 [build]
 workDir = "backend"
 
+
 [phases.setup]
 nixPkgs = ["nodejs", "typescript"]
 
 [phases.install]
-cmds = ["npm install"]
+cmds = ["npm install --only=production", "npm install --save-dev typescript"]
 
 [phases.build]
 cmds = ["npm run build"]
