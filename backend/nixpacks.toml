@@ -1,6 +1,3 @@
-[build]
-workDir = "backend"
-
 [phases.setup]
 nixPkgs = ["nodejs"]
 
